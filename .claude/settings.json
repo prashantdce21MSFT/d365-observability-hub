@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(az rest:*)",
+      "Bash(az account:*)",
+      "Bash(az login:*)",
+      "Bash(curl:*)",
+      "Bash(sleep:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(date:*)",
+      "Bash(printf:*)",
+      "Bash(jq:*)",
+      "Bash(tail:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(type:*)",
+      "Bash(findstr:*)",
+      "Read(schemas/*)",
+      "Read(kql-cache/*)",
+      "Read(reports/*)",
+      "Read(alerts/*)",
+      "Read(run-log.jsonl)",
+      "Write(schemas/*)",
+      "Write(kql-cache/*)",
+      "Write(reports/*)",
+      "Write(alerts/*)",
+      "Write(run-log.jsonl)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo Session ended >> run-log.jsonl"
+          }
+        ]
+      }
+    ]
+  }
+}
