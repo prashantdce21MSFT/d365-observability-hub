@@ -281,7 +281,7 @@ Then: `/monitor 60 schemas/active.json objectives.json`
 ## Author
 
 **Prashant Verma** — Principal Consultant, AI Business Solutions  
-Built with Claude Code · Recognised by Microsoft Cowork Programme
+
 
 ---
 
