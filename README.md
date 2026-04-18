@@ -1,7 +1,7 @@
 <div align="center">
 
 # ◉ D365 Observability Hub
-
+![D365 Observability Hub](docs/D365-Observability-Hub.gif)
 ### Overnight AI Monitoring for D365 Finance & Operations
 
 [![Claude Code](https://img.shields.io/badge/Powered%20by-Claude%20Code-7C3AED?style=flat-square)](https://claude.ai/code)
