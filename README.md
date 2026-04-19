@@ -539,7 +539,7 @@ No agent files need editing.
 ## Author
 
 **Prashant Verma** — Principal Consultant, AI Business Solutions
-Built with Claude Code · Recognised by Microsoft Cowork Programme · Hackathon 2026
+
 
 ---
 
