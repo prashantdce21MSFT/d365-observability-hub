@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(az rest:*)",
+      "Bash(az account:*)",
+      "Bash(az login:*)",
+      "Bash(az monitor:*)",
+      "Bash(sleep:*)",
+      "Bash(mkdir:*)",
+      "Bash(mkdir -p:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(date:*)",
+      "Bash(printf:*)",
+      "Bash(ls:*)",
+      "Bash(dir:*)",
+      "Bash(type:*)",
+      "Bash(findstr:*)",
+      "Bash(grep:*)",
+      "Bash(jq:*)",
+      "Bash(wc:*)",
+      "Bash(tail:*)",
+      "Bash(head:*)",
+      "Bash(curl:*)",
+      "Read(schemas/*)",
+      "Read(.claude/*)",
+      "Read(kql-cache/*)",
+      "Read(reports/*)",
+      "Read(alerts/*)",
+      "Read(docs/*)",
+      "Read(run-log.jsonl)",
+      "Read(CLAUDE.md)",
+      "Write(schemas/*)",
+      "Write(kql-cache/*)",
+      "Write(reports/*)",
+      "Write(alerts/*)",
+      "Write(docs/*)",
+      "Write(run-log.jsonl)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo {\"ts\":\"%DATE% %TIME%\",\"event\":\"session_ended\"} >> run-log.jsonl"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "_comment": "Fill in your Azure App Insights connection details. This is the ONLY file you need to edit. Run /load-schema after saving.",
+  "_version": "2.0",
+  "appId": "YOUR_APP_INSIGHTS_APP_ID",
+  "appName": "YOUR_APP_INSIGHTS_NAME",
+  "resourceGroup": "YOUR_RESOURCE_GROUP",
+  "tenant": "YOUR_TENANT.onmicrosoft.com",
+  "azRest": "az rest --method post --url \"https://api.applicationinsights.io/v1/apps/YOUR_APP_INSIGHTS_APP_ID/query\" --headers \"Content-Type=application/json\" --body \"{\\\"query\\\": \\\"{query}\\\"}\""
+}

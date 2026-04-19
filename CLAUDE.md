@@ -1,0 +1,128 @@
+# D365 Observability Hub
+
+## Startup Banner
+When the user says hello or types anything for the first time, print ONLY this exact text:
+
+◉  D365 Observability Hub
+   Azure App Insights  ·  Claude Code  ·  7 Agents
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AGENTS   batch · dmf · exception · form
+         kql · runner · insights · schema-analyst
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONFIG   schemas/active.json · schemas/thresholds.json
+AUTH     az login (Azure AD) · no API keys needed
+STATUS   ready — run /load-schema first if new environment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/load-schema   initialise from your App Insights schema
+/monitor       start overnight loop
+/query         ask anything in plain English
+/status        see reports and alerts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         v2.0 · AI Biz Solutions
+
+Then ask: "Have you run /load-schema yet? If not, start there."
+
+## Project Purpose
+Overnight monitoring for D365 Finance & Operations via Azure App Insights.
+
+This system is fully schema-driven. NO event names, column names, table names, or thresholds are hardcoded anywhere. Everything is discovered dynamically from the customer's App Insights schema and configured via thresholds.json.
+
+## Architecture — Schema-Driven Design
+```
+schemas/active.json        ← your App Insights connection details
+schemas/thresholds.json    ← all monitoring thresholds (edit these)
+         │
+         ▼
+schema-analyst             ← discovers tables, events, columns dynamically
+         │
+         ▼
+schemas/parsed-schema.json ← structured schema used by ALL agents
+         │
+    ┌────┴────┐
+    ▼         ▼
+kql-generator  batch/dmf/exception/form agents
+    │
+    ▼
+query-runner   ← connection details from parsed-schema only
+    │
+    ▼
+insights-writer ← thresholds from parsed-schema only
+```
+
+## Environment
+All connection details come from `schemas/active.json`. No values are hardcoded in this file.
+
+Required fields in `schemas/active.json`:
+- `appId` — Azure App Insights Application ID
+- `appName` — App Insights resource name
+- `resourceGroup` — Azure resource group
+- `tenant` — Azure AD tenant
+- `azRest` — az rest command template with {query} placeholder
+
+## Your Role as Orchestrator
+
+### First-time setup flow:
+1. Check if `schemas/parsed-schema.json` exists
+2. If not — instruct user to run `/load-schema` first
+3. schema-analyst runs, discovers everything dynamically
+4. Only then spawn monitoring agents
+
+### /monitor flow:
+1. Verify `schemas/parsed-schema.json` exists and is recent (< 7 days)
+2. If stale — offer to refresh: "Schema is X days old — refresh with /load-schema?"
+3. Spawn all 4 specialist agents in parallel using Task tool
+4. Each agent reads from parsed-schema.json — not from this file
+5. Sleep `thresholds.general.lookback_window_minutes * 60` seconds
+6. Repeat until stopped
+
+### /query flow:
+1. Read `schemas/parsed-schema.json`
+2. Identify domain from question
+3. Spawn kql-generator + query-runner + insights-writer
+4. All three agents read from parsed-schema.json
+
+## Agent Responsibilities
+
+| Agent | Reads from schema | Never hardcodes |
+|-------|-------------------|-----------------|
+| schema-analyst | active.json | Everything else |
+| batch-agent | parsed-schema.json | Event names, columns, thresholds |
+| dmf-agent | parsed-schema.json | Event names, columns, thresholds, status values |
+| exception-agent | parsed-schema.json | Table name, columns, thresholds |
+| form-agent | parsed-schema.json | Table name, columns, thresholds |
+| kql-generator | parsed-schema.json | All KQL patterns |
+| query-runner | parsed-schema.json | App ID, resource group |
+| insights-writer | parsed-schema.json | All threshold values |
+
+## Output Conventions
+- Reports → `reports/YYYY-MM-DD/{agent}-report-{timestamp}.md`
+- Alerts → `alerts/alert-{agent}-{timestamp}.json`
+- KQL cache → `kql-cache/{taskId}.kql` + `.results.json` + `.meta.json`
+- Run log → `run-log.jsonl` (append only)
+
+## Portability
+This system works on ANY Azure App Insights resource — not just D365. 
+Change `schemas/active.json` to point to a different resource.
+Change `schemas/thresholds.json` to adjust thresholds.
+Run `/load-schema` to rediscover everything.
+No agent files need to be edited.
+
+## Never Do
+- Never read thresholds from this file — they live in thresholds.json only
+- Never hardcode event names anywhere — always discover from schema
+- Never hardcode App ID anywhere — always read from parsed-schema.json
+- Never stop the loop unless user explicitly asks
+- Never skip writing reports even if data is empty
+
+## After Each Cycle
+After every monitoring cycle completes and all 4 specialist agents have finished writing their reports, automatically generate a dashboard by reading all reports and alerts from today and creating a dark themed HTML monitoring dashboard. The dashboard must include:
+- A status card for each agent (batch, dmf, exception, form) showing OK / WARNING / CRITICAL
+- Key metrics from each report
+- All alerts fired this cycle with severity badges
+- Timestamp of last cycle and next scheduled cycle
+- A summary banner at the top showing overall environment health
+
+Save the dashboard to `reports/dashboard.html` — overwrite if it already exists so it always shows the latest cycle.
+
+Open the file path in the terminal so the user knows it is ready:
+`reports/dashboard.html updated — open in browser to view`
