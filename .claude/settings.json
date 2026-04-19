@@ -4,14 +4,21 @@
       "Bash(az rest:*)",
       "Bash(az account:*)",
       "Bash(az login:*)",
+<<<<<<< HEAD
       "Bash(az monitor:*)",
       "Bash(sleep:*)",
       "Bash(mkdir:*)",
       "Bash(mkdir -p:*)",
+=======
+      "Bash(curl:*)",
+      "Bash(sleep:*)",
+      "Bash(mkdir:*)",
+>>>>>>> 1f5af014f35da249ebf591b7249ce535f318d132
       "Bash(cat:*)",
       "Bash(echo:*)",
       "Bash(date:*)",
       "Bash(printf:*)",
+<<<<<<< HEAD
       "Bash(ls:*)",
       "Bash(dir:*)",
       "Bash(type:*)",
@@ -30,11 +37,27 @@
       "Read(docs/*)",
       "Read(run-log.jsonl)",
       "Read(CLAUDE.md)",
+=======
+      "Bash(jq:*)",
+      "Bash(tail:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(type:*)",
+      "Bash(findstr:*)",
+      "Read(schemas/*)",
+      "Read(kql-cache/*)",
+      "Read(reports/*)",
+      "Read(alerts/*)",
+      "Read(run-log.jsonl)",
+>>>>>>> 1f5af014f35da249ebf591b7249ce535f318d132
       "Write(schemas/*)",
       "Write(kql-cache/*)",
       "Write(reports/*)",
       "Write(alerts/*)",
+<<<<<<< HEAD
       "Write(docs/*)",
+=======
+>>>>>>> 1f5af014f35da249ebf591b7249ce535f318d132
       "Write(run-log.jsonl)"
     ],
     "deny": []
@@ -45,7 +68,11 @@
         "hooks": [
           {
             "type": "command",
+<<<<<<< HEAD
             "command": "echo {\"ts\":\"%DATE% %TIME%\",\"event\":\"session_ended\"} >> run-log.jsonl"
+=======
+            "command": "echo Session ended >> run-log.jsonl"
+>>>>>>> 1f5af014f35da249ebf591b7249ce535f318d132
           }
         ]
       }

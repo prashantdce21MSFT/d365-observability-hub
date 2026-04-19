@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "_comment": "Fill in your Azure App Insights connection details. This is the ONLY file you need to edit. Run /load-schema after saving.",
   "_version": "2.0",
   "appId": "YOUR_APP_INSIGHTS_APP_ID",
@@ -6,4 +7,141 @@
   "resourceGroup": "YOUR_RESOURCE_GROUP",
   "tenant": "YOUR_TENANT.onmicrosoft.com",
   "azRest": "az rest --method post --url \"https://api.applicationinsights.io/v1/apps/YOUR_APP_INSIGHTS_APP_ID/query\" --headers \"Content-Type=application/json\" --body \"{\\\"query\\\": \\\"{query}\\\"}\""
+=======
+  "appInsightsConfig": {
+    "appId": "YOUR_APP_INSIGHTS_APP_ID",
+    "resourceGroup": "YOUR_RESOURCE_GROUP",
+    "appName": "YOUR_APP_INSIGHTS_NAME",
+    "environmentId": "YOUR_ENVIRONMENT_ID",
+    "aosInstance": "AOS1",
+    "infrastructure": "ServiceFabric",
+    "legalEntity": "dat",
+    "batchMaxThreads": 8
+  },
+  "tables": {
+    "customEvents": {
+      "description": "All D365 FO telemetry — batch, DMF, user sessions",
+      "columns": {
+        "timestamp": "datetime",
+        "name": "string",
+        "customDimensions": "dynamic",
+        "session_Id": "string",
+        "user_Id": "string",
+        "application_Version": "string",
+        "client_Type": "string",
+        "client_City": "string",
+        "client_CountryOrRegion": "string",
+        "cloud_RoleName": "string",
+        "cloud_RoleInstance": "string",
+        "appId": "string",
+        "itemId": "string",
+        "itemCount": "int"
+      },
+      "events": {
+        "BatchTaskStart": {
+          "eventId": "Batch00001",
+          "customDimensions": {
+            "BatchJobId": "string", "BatchTaskId": "string", "BatchJobCaption": "string",
+            "ClassName": "string", "Critical": "bool", "ExecutionMode": "string",
+            "GroupId": "string", "LegalEntity": "string", "Priority": "int",
+            "UserGuid": "string", "activityId": "string", "environmentId": "string",
+            "eventId": "string", "InfoMessage": "string"
+          }
+        },
+        "BatchTaskFinished": {
+          "eventId": "Batch00002",
+          "customDimensions": {
+            "BatchJobId": "string", "BatchTaskId": "string", "BatchJobCaption": "string",
+            "ClassName": "string", "Critical": "string", "ExecutionMode": "string",
+            "LegalEntity": "string", "elapsedMilliseconds": "string",
+            "UserGuid": "string", "activityId": "string", "environmentId": "string",
+            "eventId": "string", "InfoMessage": "string"
+          }
+        },
+        "BatchTaskFailure": {
+          "eventId": "Batch00003",
+          "customDimensions": {
+            "BatchJobId": "string", "BatchTaskId": "string", "BatchJobCaption": "string",
+            "ClassName": "string", "Critical": "bool", "ExecutionMode": "string",
+            "LegalEntity": "string", "ExceptionMessage": "string",
+            "ExceptionType": "string", "ExceptionSource": "string",
+            "CallStack": "string", "activityId": "string"
+          }
+        },
+        "BatchThrottled": {
+          "eventId": "Batch00005",
+          "customDimensions": {
+            "InfoMessage": "string (JSON: CurrentMachineCpu, CurrentMachineMemory, CurrentSqlDtu)",
+            "LegalEntity": "string", "activityId": "string"
+          }
+        },
+        "BatchQueuesDetails": {
+          "eventId": "Batch00006",
+          "customDimensions": {
+            "InfoMessage": "string (JSON: BatchCriticalSchedulingQueue, BatchHighSchedulingQueue, BatchLowSchedulingQueue, BatchNormalSchedulingQueue, BatchReservedCapacitySchedulingQueue, ReadyTasksBuffer, ReadyTasksBufferWithPriorities)",
+            "LegalEntity": "string", "activityId": "string"
+          }
+        },
+        "BatchThreadInfo": {
+          "eventId": "Batch00007",
+          "customDimensions": {
+            "InfoMessage": "string (JSON: CurrentBatchTasks, TaskQueueCount, MaxThreadCount, ReservedNumberOfThreads)",
+            "LegalEntity": "string", "activityId": "string"
+          }
+        },
+        "DMFExportJobStart":    { "customDimensions": { "JobId": "string", "EntityName": "string", "activityId": "string", "ExecutionId": "string" } },
+        "DMFExportJobEnd":      { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "RecordCount": "int", "ErrorCount": "int", "activityId": "string" } },
+        "DMFExportStagingStart":{ "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "activityId": "string" } },
+        "DMFExportStagingEnd":  { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "RecordCount": "int", "ErrorCount": "int", "activityId": "string" } },
+        "DMFExportTargetStart": { "customDimensions": { "JobId": "string", "EntityName": "string", "activityId": "string" } },
+        "DMFExportTargetEnd":   { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "activityId": "string" } },
+        "DMFImportJobStart":    { "customDimensions": { "JobId": "string", "EntityName": "string", "activityId": "string" } },
+        "DMFImportJobEnd":      { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "RecordCount": "int", "ErrorCount": "int", "activityId": "string" } },
+        "DMFImportStagingEnd":  { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "RecordCount": "int", "ErrorCount": "int", "activityId": "string" } },
+        "DMFImportTargetEnd":   { "customDimensions": { "JobId": "string", "EntityName": "string", "StagingStatus": "string", "activityId": "string" } }
+      }
+    },
+    "exceptions": {
+      "description": "X++ and .NET exceptions from D365 FO",
+      "columns": {
+        "timestamp": "datetime",
+        "type": "string",
+        "method": "string",
+        "outerMessage": "string",
+        "customDimensions": "dynamic",
+        "session_Id": "string",
+        "user_Id": "string",
+        "application_Version": "string",
+        "client_Type": "string",
+        "client_City": "string",
+        "cloud_RoleName": "string",
+        "cloud_RoleInstance": "string",
+        "itemCount": "int"
+      }
+    },
+    "pageViews": {
+      "description": "D365 FO form opens — Form runs telemetry",
+      "columns": {
+        "timestamp": "datetime",
+        "name": "string",
+        "url": "string",
+        "duration": "real",
+        "session_Id": "string",
+        "user_Id": "string",
+        "client_City": "string",
+        "client_CountryOrRegion": "string",
+        "customDimensions": "dynamic"
+      }
+    }
+  },
+  "kqlTips": {
+    "batchDuration": "tolong(customDimensions.elapsedMilliseconds) on BatchTaskFinished",
+    "threadInfo": "parse_json(customDimensions.InfoMessage) on BatchThreadInfo — fields: CurrentBatchTasks, MaxThreadCount, TaskQueueCount",
+    "throttleInfo": "parse_json(customDimensions.InfoMessage) on BatchThrottled — fields: CurrentMachineCpu, CurrentMachineMemory, CurrentSqlDtu",
+    "queueInfo": "parse_json(customDimensions.InfoMessage) on BatchQueuesDetails — fields: BatchCriticalSchedulingQueue etc",
+    "batchCorrelation": "join BatchTaskFailure to exceptions on customDimensions.activityId",
+    "dmfDuration": "join DMFExportJobStart + DMFExportJobEnd on customDimensions.activityId, use datetime_diff",
+    "azRest": "az rest --method post --url \"https://api.applicationinsights.io/v1/apps/YOUR_APP_INSIGHTS_APP_ID/query\" --headers \"Content-Type=application/json\" --body \"{\\\"query\\\": \\\"...\\\"}\"" 
+  }
+>>>>>>> 1f5af014f35da249ebf591b7249ce535f318d132
 }
